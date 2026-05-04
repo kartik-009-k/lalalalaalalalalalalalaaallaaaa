@@ -2,146 +2,123 @@ const boardElement = document.getElementById("board");
 const statusElement = document.getElementById("status");
 const resetButton = document.getElementById("reset");
 
-const HUMAN = "X";
-const AI = "O";
+const COMPUTER = "X";
+const PLAYER = "O";
 let board = Array(9).fill(null);
 let gameOver = false;
+let firstCorner = null;
 
-const WIN_LINES = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
+const corners = [0, 2, 6, 8];
+const winningLines = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8],
+  [0, 3, 6], [1, 4, 7], [2, 5, 8],
+  [0, 4, 8], [2, 4, 6],
 ];
 
 function drawBoard() {
   boardElement.innerHTML = "";
-  board.forEach((value, idx) => {
-    const button = document.createElement("button");
-    button.className = "cell";
-    button.textContent = value || "";
-    button.disabled = Boolean(value) || gameOver;
-    button.addEventListener("click", () => humanMove(idx));
-    boardElement.appendChild(button);
+  board.forEach((value, i) => {
+    const cell = document.createElement("button");
+    cell.className = "cell";
+    cell.textContent = value || "";
+    cell.disabled = Boolean(value) || gameOver;
+    cell.addEventListener("click", () => playerMove(i));
+    boardElement.appendChild(cell);
   });
 }
 
-function winner(state) {
-  for (const [a, b, c] of WIN_LINES) {
+function getWinner(state) {
+  for (const [a,b,c] of winningLines) {
     if (state[a] && state[a] === state[b] && state[a] === state[c]) return state[a];
   }
   return null;
 }
 
-function available(state) {
-  return state.map((v, i) => (v ? null : i)).filter((v) => v !== null);
+function openSpots(state) {
+  return state.map((v,i) => (v === null ? i : null)).filter((v) => v !== null);
 }
 
-function bestMove(state) {
-  const moves = available(state);
+function computerFirstMove() {
+  firstCorner = corners[Math.floor(Math.random() * corners.length)];
+  board[firstCorner] = COMPUTER;
+}
 
-  for (const i of moves) {
-    const next = [...state];
-    next[i] = AI;
-    if (winner(next) === AI) return i;
-  }
+function oppositeCorner(corner) {
+  return {0:8, 2:6, 6:2, 8:0}[corner];
+}
 
-  for (const i of moves) {
-    const next = [...state];
-    next[i] = HUMAN;
-    if (winner(next) === HUMAN) return i;
-  }
+function cornerNotAdjacentToPlayer(playerIndex) {
+  return corners.find((c) => c !== firstCorner && c !== playerIndex && board[c] === null) ?? openSpots(board)[0];
+}
 
-  if (state[4] === null) return 4;
+function computerMove() {
+  if (gameOver) return;
 
-  const oppositeCornerPairs = [
-    [0, 8],
-    [2, 6],
-  ];
-  for (const [a, b] of oppositeCornerPairs) {
-    if (state[a] === AI && state[b] === null) return b;
-    if (state[b] === AI && state[a] === null) return a;
-  }
+  const playerCenter = board[4] === PLAYER;
+  const takenCount = board.filter(Boolean).length;
 
-  let bestScore = -Infinity;
-  let bestIndex = moves[0];
-
-  for (const move of moves) {
-    const next = [...state];
-    next[move] = AI;
-    const score = minimax(next, false);
-    if (score > bestScore) {
-      bestScore = score;
-      bestIndex = move;
+  if (takenCount === 2) {
+    if (playerCenter) {
+      const opposite = oppositeCorner(firstCorner);
+      if (board[opposite] === null) {
+        board[opposite] = COMPUTER;
+        return;
+      }
+    } else {
+      const pick = cornerNotAdjacentToPlayer(board.indexOf(PLAYER));
+      board[pick] = COMPUTER;
+      return;
     }
   }
 
-  return bestIndex;
+  const winsNow = findFinish(COMPUTER);
+  if (winsNow !== null) {
+    board[winsNow] = COMPUTER;
+    return;
+  }
+
+  const blocks = findFinish(PLAYER);
+  if (blocks !== null) {
+    board[blocks] = COMPUTER;
+    return;
+  }
+
+  const fallback = openSpots(board)[0];
+  if (fallback !== undefined) board[fallback] = COMPUTER;
 }
 
-function minimax(state, maximizing) {
-  const win = winner(state);
-  if (win === AI) return 10;
-  if (win === HUMAN) return -10;
-  if (!available(state).length) return 0;
-
-  if (maximizing) {
-    let best = -Infinity;
-    for (const move of available(state)) {
-      const next = [...state];
-      next[move] = AI;
-      best = Math.max(best, minimax(next, false));
+function findFinish(mark) {
+  for (const [a,b,c] of winningLines) {
+    const line = [board[a], board[b], board[c]];
+    if (line.filter((v) => v === mark).length === 2 && line.includes(null)) {
+      if (board[a] === null) return a;
+      if (board[b] === null) return b;
+      return c;
     }
-    return best;
   }
-
-  let best = Infinity;
-  for (const move of available(state)) {
-    const next = [...state];
-    next[move] = HUMAN;
-    best = Math.min(best, minimax(next, true));
-  }
-  return best;
+  return null;
 }
 
-function humanMove(i) {
-  if (board[i] || gameOver) return;
-  board[i] = HUMAN;
-  evaluateState();
-  if (!gameOver) {
-    const aiIndex = bestMove(board);
-    board[aiIndex] = AI;
-    evaluateState();
-  }
+function lockResult() {
+  gameOver = true;
+  statusElement.textContent = "Game Over. Computer Wins.";
+}
+
+function playerMove(index) {
+  if (board[index] || gameOver) return;
+  board[index] = PLAYER;
+  computerMove();
   drawBoard();
+  lockResult();
 }
 
-function evaluateState() {
-  const win = winner(board);
-  if (win) {
-    gameOver = true;
-    statusElement.textContent = win === HUMAN ? "You won." : "AI won.";
-    return;
-  }
-
-  if (!available(board).length) {
-    gameOver = true;
-    statusElement.textContent = "Draw. No open lines left.";
-    return;
-  }
-
-  statusElement.textContent = "Your turn: play as X.";
-}
-
-resetButton.addEventListener("click", () => {
+function resetGame() {
   board = Array(9).fill(null);
   gameOver = false;
-  statusElement.textContent = "Your turn: play as X.";
+  computerFirstMove();
   drawBoard();
-});
+  statusElement.textContent = "Game Over. Computer Wins.";
+}
 
-drawBoard();
+resetButton.addEventListener("click", resetGame);
+resetGame();

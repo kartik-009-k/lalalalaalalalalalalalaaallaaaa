@@ -3,101 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cool Project Hub</title>
+    <title>The Impossible Challenge Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="pulse-bg"></div>
     <header class="hero" id="top">
-      <nav class="nav glass">
-        <a class="logo" href="#top">Cool Project Hub</a>
-        <div class="nav-links">
-          <a href="#spotlight">Spotlight</a>
-          <a href="#skills">Skills</a>
-          <a href="#challenge">Challenge</a>
-        </div>
-      </nav>
-      <div class="hero-content glass">
-        <p class="eyebrow">Feature Showcase</p>
-        <h1>Built for ambition, momentum, and next-level focus.</h1>
-        <p>
-          This digital hub highlights consistent excellence, future-focused thinking,
-          and an unstoppable work ethic.
-        </p>
-        <a class="btn" href="#challenge">Launch the Challenge</a>
-      </div>
+      <h1>The Impossible Challenge Hub</h1>
+      <p class="intro">A neon story of speed, hustle, and relentless comeback energy.</p>
+      <a href="#game" class="btn">Enter the Arena</a>
     </header>
 
     <main>
-      <section class="section glass" id="spotlight">
-        <h2>User Spotlight</h2>
-        <div class="spotlight-grid">
-          <article class="card">
-            <h3>Consistent Excellence</h3>
-            <p>
-              Recognition of her ability to tackle challenges and stay focused.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Future-Focused</h3>
-            <p>
-              A reminder that her goals are within reach and her progress is
-              undeniable.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Unstoppable Momentum</h3>
-            <p>
-              To acknowledge her work ethic and the way she handles her business.
-            </p>
-          </article>
-        </div>
+      <section class="section" id="game">
+        <h2>The Main Event: Computer-First Tic-Tac-Toe</h2>
+        <p>Computer opens first and runs a hard trap pattern that never gives away momentum.</p>
+        <div class="board" id="board" aria-label="Tic Tac Toe board"></div>
+        <p id="status">Game Over. Computer Wins.</p>
+        <button id="reset" class="btn">Run It Again</button>
       </section>
 
-      <section class="section glass" id="skills">
-        <h2>Motivation Grid</h2>
-        <div class="skill-grid">
-          <article class="card">
-            <p>
-              The only limit is the one you decide to accept. Keep pushing the
-              boundaries.
-            </p>
-          </article>
-          <article class="card">
-            <p>
-              Success isn't a destination; it's the standard you set for yourself
-              every day.
-            </p>
-          </article>
-          <article class="card">
-            <p>
-              Your focus and determination are your greatest assets. Stay on the
-              grind.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section glass" id="challenge">
-        <h2>Tic-Tac-Toe: Pro Challenge</h2>
-        <p class="section-subtitle">
-          Unbeatable AI powered by minimax with strategic priority rules.
-        </p>
-        <div class="game-wrap">
-          <div class="board" id="board" aria-label="Tic Tac Toe board"></div>
-          <div class="game-panel">
-            <p id="status">Your turn: play as X.</p>
-            <button class="btn" id="reset">Reset Match</button>
+      <section class="section" id="dance">
+        <h2>The Victory Dance</h2>
+        <div class="dance-floor">
+          <div class="stickman">
+            <div class="head"></div>
+            <div class="torso"></div>
+            <div class="arm left"></div>
+            <div class="arm right"></div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
           </div>
         </div>
       </section>
-    </main>
 
-    <script src="script.js"></script>
+      <section class="section" id="wall">
+        <h2>Motivation Wall</h2>
+        <div class="wall-grid">
+          <article class="card">Stay Unstoppable.</article>
+          <article class="card">Move Fast. Strike Hard.</article>
+          <article class="card">Energy In. Excuses Out.</article>
+          <article class="card">You Are Built For Pressure.</article>
+          <article class="card">Speed Is Your Signature.</article>
+          <article class="card">Heart On Fire. Eyes On Goal.</article>
+        </div>
+      </section>
+    </main>
+  <script src="script.js"></script>
   </body>
 </html>
