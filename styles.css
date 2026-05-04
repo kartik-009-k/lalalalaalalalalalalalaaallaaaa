@@ -1,0 +1,163 @@
+:root {
+  --bg: #0f1117;
+  --panel: #171a24;
+  --card: #1f2330;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #5865f2;
+  --neon: #4ef0d3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at top right, #1f2642, var(--bg) 35%);
+  color: var(--text);
+}
+
+.hero,
+.section {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+.hero {
+  min-height: 92vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+}
+
+.logo {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 1.2rem;
+}
+
+.nav-links a:hover {
+  color: var(--neon);
+}
+
+.hero-content {
+  align-self: center;
+  max-width: 760px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.12;
+}
+
+.btn {
+  background: linear-gradient(120deg, var(--accent), #7d89ff);
+  border: none;
+  color: #fff;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(88, 101, 242, 0.35);
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+}
+
+.spotlight-grid,
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid #2c3244;
+  border-radius: 0.8rem;
+  padding: 1rem;
+}
+
+.section-subtitle {
+  color: var(--muted);
+}
+
+.game-wrap {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 90px);
+  gap: 0.5rem;
+}
+
+.cell {
+  width: 90px;
+  height: 90px;
+  border-radius: 0.6rem;
+  border: 1px solid #3a4158;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cell:hover {
+  border-color: var(--neon);
+}
+
+#status {
+  margin-top: 0;
+}
+
+@media (max-width: 860px) {
+  .spotlight-grid,
+  .skill-grid,
+  .game-wrap {
+    grid-template-columns: 1fr;
+  }
+}
