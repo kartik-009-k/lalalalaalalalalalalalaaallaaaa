@@ -1,10 +1,10 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, LayoutPanelTop, Bot, BookOpenText, Sparkles, ChartSpline } from 'lucide-react'
+import { Brain, LayoutPanelTop, Bot, BookOpenText, Sparkles, LineChart } from 'lucide-react'
 import GlassPanel from './GlassPanel'
 
 const engines = [
   { name: 'Memory Engine', icon: Brain },
-  { name: 'Visualization Engine', icon: ChartSpline },
+  { name: 'Visualization Engine', icon: LineChart },
   { name: 'Learning Engine', icon: BookOpenText },
   { name: 'Agent Engine', icon: Bot },
   { name: 'Layout Engine', icon: LayoutPanelTop },
