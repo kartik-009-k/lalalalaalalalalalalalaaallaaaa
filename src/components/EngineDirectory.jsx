@@ -1,14 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Brain, LayoutPanelTop, Bot, BookOpenText, Sparkles, LineChart } from 'lucide-react'
 import GlassPanel from './GlassPanel'
 
 const engines = [
-  { name: 'Memory Engine', icon: Brain },
-  { name: 'Visualization Engine', icon: LineChart },
-  { name: 'Learning Engine', icon: BookOpenText },
-  { name: 'Agent Engine', icon: Bot },
-  { name: 'Layout Engine', icon: LayoutPanelTop },
-  { name: 'Personality Engine', icon: Sparkles },
+  'Memory Engine',
+  'Visualization Engine',
+  'Learning Engine',
+  'Agent Engine',
+  'Layout Engine',
+  'Personality Engine',
 ]
 
 export default function EngineDirectory({ open }) {
@@ -24,22 +23,21 @@ export default function EngineDirectory({ open }) {
         >
           <GlassPanel className="w-[min(90vw,850px)] p-4 md:p-5">
             <div className="flex gap-3 overflow-x-auto pb-1">
-              {engines.map((engine, index) => {
-                const Icon = engine.icon
-                return (
-                  <motion.div
-                    key={engine.name}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * index, duration: 0.35 }}
-                    whileHover={{ y: -5 }}
-                    className="glass-surface min-w-48 rounded-2xl p-4"
-                  >
-                    <Icon className="mb-2 h-5 w-5 text-white/85" />
-                    <p className="text-sm tracking-wide text-white/90">{engine.name}</p>
-                  </motion.div>
-                )
-              })}
+              {engines.map((name, index) => (
+                <motion.div
+                  key={name}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 * index, duration: 0.35 }}
+                  whileHover={{ y: -5 }}
+                  className="glass-surface min-w-48 rounded-2xl p-4"
+                >
+                  <div className="mb-2 flex h-5 w-5 items-center justify-center rounded-full border border-white/35 text-[10px] text-white/85">
+                    ●
+                  </div>
+                  <p className="text-sm tracking-wide text-white/90">{name}</p>
+                </motion.div>
+              ))}
             </div>
           </GlassPanel>
         </motion.div>
